@@ -23,20 +23,29 @@ class BitCoinExchange {
 		std::map<std::string, double> _data;
 		std::string trim(const std::string& str) const;
 		bool isValideDate(const std::string& str) const;
+	
 	public:
 		// ===== FCO =====
 		BitCoinExchange();
 		BitCoinExchange(const BitCoinExchange& copy);
 		BitCoinExchange& operator=(const BitCoinExchange& assign);
 		~BitCoinExchange();
-		void loadFile(const std::string& filename);
+		void loadDataBase(const std::string& filename);
+		void readInputFile(const std::string& filename);
 		void readMap() ;
 
 		// ===== Exception =====
 		class ErrorFile : public std::exception {
 			public:
 				virtual const char * what() const throw() {
-					return "Error file";
+					return "Error: could not open file.";
+				}
+		};
+
+		class ErrorInput : public std::exception {
+			public:
+				virtual const char * what() const throw() {
+					return "Error : bad input";
 				}
 		};
 		

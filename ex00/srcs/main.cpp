@@ -28,11 +28,17 @@ int main() {
 	// }
 	BitCoinExchange a;
 	try {
-		a.loadFile("data.csv");
+		a.loadDataBase("data.csv");
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
-	a.readMap();
+	try {
+		a.readInputFile("input.txt");
+	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;
+	}
+	// a.readMap();
 	return 0;
 }
