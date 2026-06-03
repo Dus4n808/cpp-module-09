@@ -165,8 +165,8 @@ void BitCoinExchange::readInputFile(const std::string& filename) {
 	}
 }
 
-void BitCoinExchange::readMap() {
-	std::map<std::string, double>::iterator it;
+void BitCoinExchange::readMap() const {
+	std::map<std::string, double>::const_iterator it;
 	for (it = _data.begin(); it != _data.end(); ++it) {
 		std::cout << it->first << "  " << it->second << std::endl;
 	}

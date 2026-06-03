@@ -32,7 +32,7 @@ class BitCoinExchange {
 		~BitCoinExchange();
 		void loadDataBase(const std::string& filename);
 		void readInputFile(const std::string& filename);
-		void readMap() ;
+		void readMap() const ;
 
 		// ===== Exception =====
 		class ErrorFile : public std::exception {
