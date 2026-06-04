@@ -11,34 +11,32 @@
 /* ************************************************************************** */
 
 #include <exception>
-#include <map>
 #include <string>
 #include <iostream>
 #include "../headers/BitcoinExchange.hpp"
 
 
-int main() {
-	// std::map<std::string, int> a;
-	// a.insert(std::pair<std::string, int>("coucou", 12));
-
-	// std::map<std::string, int>::iterator it;
-
-	// for (it = a.begin(); it != a.end(); ++it) {
-	// 	std::cout << it->first << it->second << srs 
-	// }
-	BitCoinExchange a;
-	try {
-		a.loadDataBase("data.csv");
+int main(int argc, char *argv[]) {
+	(void)argv;
+	if (argc != 2) {
+		std::cout << "Usage: ./btc [file]" << std::endl;	
 	}
-	catch (std::exception& e) {
-		std::cerr << e.what() << std::endl;
+	else {
+		BitCoinExchange a;
+		try {
+			a.loadDataBase("data.csv");
+		}
+		catch (std::exception& e) {
+			std::cerr << e.what() << std::endl;
+			std::cerr << "Please enter a valid database" << std::endl;
+		}
+		try {
+			a.readInputFile(argv[1]);
+		}
+		catch (std::exception& e) {
+			std::cerr << e.what() << std::endl;
+			std::cerr << "Please add a valid input file (./btc [input file])" << std::endl;
+		}
 	}
-	try {
-		a.readInputFile("input.txt");
-	}
-	catch (std::exception& e) {
-		std::cerr << e.what() << std::endl;
-	}
-	// a.readMap();
 	return 0;
 }

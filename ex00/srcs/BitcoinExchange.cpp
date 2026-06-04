@@ -14,7 +14,7 @@
 #include <cstddef>
 #include <fstream>
 #include <iostream>
-#include <iterator>
+#include <map>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -77,7 +77,6 @@ bool BitCoinExchange::isValideDate(const std::string& date) const {
 }
 
 // ===== Trim =====
-
 std::string BitCoinExchange::trim(const std::string& str) const {
 	std::string whiteSpace = " \t\n\r";
 	size_t start = str.find_first_not_of(whiteSpace);
@@ -87,8 +86,8 @@ std::string BitCoinExchange::trim(const std::string& str) const {
 	return str.substr(start, end - start + 1);
 }
 
-// ===== LoadDataBase =====
 
+// ===== LoadDataBase =====
 void BitCoinExchange::loadDataBase(const std::string& filename) {
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
@@ -123,7 +122,6 @@ void BitCoinExchange::loadDataBase(const std::string& filename) {
 }
 
 // ===== Read Input File =====
-
 void BitCoinExchange::readInputFile(const std::string& filename) {
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
@@ -161,13 +159,15 @@ void BitCoinExchange::readInputFile(const std::string& filename) {
 			std::cerr << "Error : too large number." << std::endl;
 			continue;
 		}
-		std::cout << date << " lol " << v << std::endl;
+		double res = getRate(v, date);
+		std::cout << date << " => " << v << " = " << res << std::endl;
 	}
 }
 
-void BitCoinExchange::readMap() const {
-	std::map<std::string, double>::const_iterator it;
-	for (it = _data.begin(); it != _data.end(); ++it) {
-		std::cout << it->first << "  " << it->second << std::endl;
-	}
+// ===== Get Rate =====
+double BitCoinExchange::getRate(double value, std::string& date) {
+	std::map<std::string, double>::iterator closer;
+	closer = _data.lower_bound(date);
+	double res = value * closer->second;
+	return res;
 }
