@@ -57,6 +57,7 @@ void myTest(void) {
 
 int main(int argc, char *argv[]) {
 	RPN genius;
+	
 	if (argc == 2) {
 		std::cout << std::endl << "===== Input User =====" << std::endl << std::endl;
 		try {

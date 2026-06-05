@@ -20,17 +20,6 @@
 // ===== Default Constructor =====
 RPN::RPN() : _stack() {}
 
-// ===== Copy Constructor =====
-RPN::RPN(const RPN& copy) : _stack(copy._stack) {}
-
-// ===== Overload =====
-RPN& RPN::operator=(const RPN& assign) {
-	if (this != &assign) {
-		_stack = assign._stack;
-	}
-	return *this;
-}
-
 // ===== Destructor =====
 RPN::~RPN() {}
 
