@@ -30,7 +30,7 @@ class PmergeMe {
 		~PmergeMe();
 
 		// ===== Methods =====
-		void test(std::string& str);
+		void sort(std::string& str);
 
 		class NumebrError : public std::exception {
 			public:
@@ -42,7 +42,7 @@ class PmergeMe {
 		class BadInput : public std::exception {
 			public:
 				const char * what() const throw() {
-					return "Not a number";
+					return "Bad input";
 				}
 		};
 
