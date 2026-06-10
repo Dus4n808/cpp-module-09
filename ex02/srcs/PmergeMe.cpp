@@ -85,14 +85,13 @@ void PmergeMe::_fill(const std::string& str) {
 // 	}
 // }
 
-// static void printVector(const std::vector<int>& v) {
-// 	std::vector<int>::const_iterator it;
-// 	int index = 0;
-// 	for (it = v.begin(); it != v.end(); ++it) {
-// 		std::cout << "Vector : index " << index << " : " << *it << std::endl;
-// 		index++;
-// 	}
-// }
+static void printVector(const std::vector<int>& v) {
+	std::vector<int>::const_iterator it;
+	for (it = v.begin(); it != v.end(); ++it) {
+		std::cout << "["<< *it << "]";
+	}
+	std::cout << std::endl;
+}
 
 // static void printPairs(const std::vector<std::pair<int, int> >& vec) {
 // 	std::vector<std::pair<int, int> >::const_iterator it;
@@ -145,7 +144,7 @@ std::vector<int> PmergeMe::_fjSortVector(std::vector<int>& toSort) {
 	int rest = -1;
 	bool hasRest = false;
 
-	for (size_t i = 0; i < 1 + toSort.size(); i += 2) {
+	for (size_t i = 0; i + 1 < toSort.size(); i += 2) {
 		if (toSort[i] > toSort[i + 1])
 			pairs.push_back(std::make_pair(toSort[i], toSort[i + 1]));
 		else
@@ -220,5 +219,7 @@ void PmergeMe::sortVector(std::string& str) {
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
-	sort = _fjSortVector(_vector);
+	printVector(_vector);
+	_vector = _fjSortVector(_vector);
+	printVector(_vector);
 }
