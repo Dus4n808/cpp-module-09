@@ -15,7 +15,7 @@
 #include <iostream>
 #include <string>
 
-std::string concat(int argc, char *argv[]) {
+static std::string concat(int argc, char *argv[]) {
 	std::string input;
 	for (int i = 1; i < argc; ++i) {
 		if (i > 1)
@@ -25,15 +25,20 @@ std::string concat(int argc, char *argv[]) {
 	return input;
 }
 
-int main(int ac, char *av[]) {
+int main(int argc, char *argv[]) {
 	PmergeMe a;
 
-	std::string input = concat(ac, av);
-	try {
-		a.sort(input);
+	if (argc < 2) {
+		std::cerr << "Usage : ./PmergeMe [Numbers input]" << std::endl;
 	}
-	catch (std::exception& e) {
-		std::cerr << e.what() << std::endl;
+	else {
+		std::string input = concat(argc, argv);
+		try {
+			a.sort(input);
+		}
+		catch (std::exception& e) {
+			std::cerr << e.what() << std::endl;
+		}
 	}
 	return 0;
 }
