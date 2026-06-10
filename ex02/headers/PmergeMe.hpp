@@ -21,7 +21,8 @@ class PmergeMe {
 	private:
 		std::vector<int> _vector;
 		std::deque<int> _deque;
-		void fill(const std::string& str);
+		void _fill(const std::string& str);
+		std::vector<int> _fjSortVector(std::vector<int>& toSort);
 	public:
 		// ===== FCO =====
 		PmergeMe();
@@ -30,7 +31,8 @@ class PmergeMe {
 		~PmergeMe();
 
 		// ===== Methods =====
-		void sort(std::string& str);
+		void sortVector(std::string& str);
+	
 
 		class NumebrError : public std::exception {
 			public:

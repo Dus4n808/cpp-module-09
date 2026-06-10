@@ -33,12 +33,7 @@ int main(int argc, char *argv[]) {
 	}
 	else {
 		std::string input = concat(argc, argv);
-		try {
-			a.sort(input);
-		}
-		catch (std::exception& e) {
-			std::cerr << e.what() << std::endl;
-		}
+		a.sortVector(input);
 	}
 	return 0;
 }

@@ -15,6 +15,7 @@
 #include <cctype>
 #include <cstddef>
 #include <deque>
+#include <exception>
 #include <limits>
 #include <sstream>
 #include <iostream>
@@ -49,7 +50,7 @@ PmergeMe::~PmergeMe() {}
 // Methods                       
 // ================================================================ //
 
-void PmergeMe::fill(const std::string& str) {
+void PmergeMe::_fill(const std::string& str) {
 
 	std::vector<int> tmp;
 	std::istringstream ss(str);
@@ -77,21 +78,21 @@ void PmergeMe::fill(const std::string& str) {
 }
 
 
-static void printDeque(const std::deque<int>& d) {
-	std::deque<int>::const_iterator it;
-	for (it = d.begin(); it != d.end(); ++it) {
-		std::cout << "Deque : " << *it << std::endl;
-	}
-}
+// static void printDeque(const std::deque<int>& d) {
+// 	std::deque<int>::const_iterator it;
+// 	for (it = d.begin(); it != d.end(); ++it) {
+// 		std::cout << "Deque : " << *it << std::endl;
+// 	}
+// }
 
-static void printVector(const std::vector<int>& v) {
-	std::vector<int>::const_iterator it;
-	int index = 0;
-	for (it = v.begin(); it != v.end(); ++it) {
-		std::cout << "Vector : index " << index << " : " << *it << std::endl;
-		index++;
-	}
-}
+// static void printVector(const std::vector<int>& v) {
+// 	std::vector<int>::const_iterator it;
+// 	int index = 0;
+// 	for (it = v.begin(); it != v.end(); ++it) {
+// 		std::cout << "Vector : index " << index << " : " << *it << std::endl;
+// 		index++;
+// 	}
+// }
 
 // static void printPairs(const std::vector<std::pair<int, int> >& vec) {
 // 	std::vector<std::pair<int, int> >::const_iterator it;
@@ -136,7 +137,7 @@ static std::vector<size_t> jacobSthal(size_t maxIndex) {
 }
 
 // ===== Ford-Johnson vector =====
-std::vector<int> fjSort(std::vector<int> toSort) {
+std::vector<int> PmergeMe::_fjSortVector(std::vector<int>& toSort) {
 	if (toSort.size() <= 1)
 		return toSort;
 
@@ -161,7 +162,7 @@ std::vector<int> fjSort(std::vector<int> toSort) {
 		bigs.push_back(pairs[i].first);
 	}
 
-	std::vector<int> sortedBigs = fjSort(bigs);
+	std::vector<int> sortedBigs = _fjSortVector(bigs);
 
 	std::vector<std::pair<int, int> > sortedPairs;
 	for (size_t i = 0; i < sortedBigs.size(); ++i) {
@@ -196,7 +197,7 @@ std::vector<int> fjSort(std::vector<int> toSort) {
 
 		size_t maxIndex = (currentJacob > pend.size()) ? pend.size(): currentJacob;
 
-		for (size_t j = maxIndex; j > currentJacob; --j) {
+		for (size_t j = maxIndex; j > lastJacob; --j) {
 			int value = pend[j - 1];
 			size_t pos = dichotomieSearch(main, value, main.size());
 			main.insert(main.begin() + pos, value);
@@ -211,14 +212,13 @@ std::vector<int> fjSort(std::vector<int> toSort) {
 	return main;
 }
 
-
-
-void PmergeMe::sort(std::string& str) {
-	fill(str);
-	(void)printDeque;
-	printVector(split(_vector));
-	// if (_vector.size() % 2 == 0)
-	// 	printPairs(splitPair(_vector));
-	// else
-	// 	printPairs(splitUnPair(_vector, &value));
+void PmergeMe::sortVector(std::string& str) {
+	std::vector<int> sort;
+	try {
+		_fill(str);
+	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;
+	}
+	sort = _fjSortVector(_vector);
 }
