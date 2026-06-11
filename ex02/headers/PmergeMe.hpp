@@ -17,12 +17,16 @@
 #include <deque>
 #include <exception>
 #include <vector>
+#include <iostream>
 
 class PmergeMe {
 	private:
 		std::vector<int> _vector;
 		std::deque<int> _deque;
-		void _fill(const std::string& str);
+		void _checkInputAndFillContainer(const std::string& str);
+		double _sortVector();
+		double _sortDeque();
+		
 	public:
 		// ===== FCO =====
 		PmergeMe();
@@ -31,7 +35,7 @@ class PmergeMe {
 		~PmergeMe();
 
 		// ===== Methods =====
-		void sortVector(std::string& str);
+		void sort(const std::string& str);
 	
 
 		class NumebrError : public std::exception {
@@ -59,11 +63,20 @@ class PmergeMe {
 std::vector<size_t> jacobSthal(size_t maxIndex);
 
 template <typename T>
-size_t dichotomieSearch(T& vToInsert, int valueToInsert, size_t maxLevel) {
+void printContainer(const T& container) {
+	typedef typename T::const_iterator iterator;
+	for (iterator it = container.begin(); it != container.end(); ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+}
+
+template <typename T>
+size_t findInsertPos(T& container, int valueToInsert, size_t maxLevel) {
 	size_t low = 0;
 	while (low < maxLevel) {
 		size_t mid = low + (maxLevel - low) / 2;
-		if (valueToInsert < vToInsert[mid])
+		if (valueToInsert < container[mid])
 			maxLevel = mid;
 		else
 			low = mid + 1;
@@ -71,9 +84,9 @@ size_t dichotomieSearch(T& vToInsert, int valueToInsert, size_t maxLevel) {
 	return low;
 }
 
-
+// ===== Ford-Johnson function =====
 template <typename T>
-T fjSortVector(T& toSort) {
+T fordJohnsonSort(T& toSort) {
 	if (toSort.size() <= 1)
 		return toSort;
 
@@ -98,7 +111,7 @@ T fjSortVector(T& toSort) {
 		bigs.push_back(pairs[i].first);
 	}
 
-	T sortedBigs = fjSortVector(bigs);
+	T sortedBigs = fordJohnsonSort(bigs);
 
 	std::vector<std::pair<int, int> > sortedPairs;
 	for (size_t i = 0; i < sortedBigs.size(); ++i) {
@@ -135,14 +148,14 @@ T fjSortVector(T& toSort) {
 
 		for (size_t j = maxIndex; j > lastJacob; --j) {
 			int value = pend[j - 1];
-			size_t pos = dichotomieSearch(main, value, main.size());
+			size_t pos = findInsertPos(main, value, main.size());
 			main.insert(main.begin() + pos, value);
 		}
 		lastJacob = maxIndex;
 	}
 
 	if (hasRest) {
-		size_t pos = dichotomieSearch(main, rest, main.size());
+		size_t pos = findInsertPos(main, rest, main.size());
 		main.insert(main.begin() + pos, rest);
 	}
 	return main;

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../headers/PmergeMe.hpp"
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <string>
@@ -35,7 +36,13 @@ int main(int argc, char *argv[]) {
 	}
 	else {
 		std::string input = concat(argc, argv);
-		a.sortVector(input);
+		try {
+			a.sort(input);
+		}
+		catch (std::exception& e) {
+			std::cerr << "Error : " << e.what() << std::endl;
+			return EXIT_FAILURE;
+		}
 	}
 	return 0;
 }
