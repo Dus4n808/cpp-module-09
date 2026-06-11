@@ -15,8 +15,6 @@
 #include <cstddef>
 #include <ctime>
 #include <deque>
-#include <exception>
-#include <iomanip>
 #include <limits>
 #include <sstream>
 #include <iostream>
