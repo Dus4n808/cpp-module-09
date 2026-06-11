@@ -13,6 +13,7 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+#include <cstddef>
 #include <deque>
 #include <exception>
 #include <vector>
@@ -22,7 +23,6 @@ class PmergeMe {
 		std::vector<int> _vector;
 		std::deque<int> _deque;
 		void _fill(const std::string& str);
-		std::vector<int> _fjSortVector(std::vector<int>& toSort);
 	public:
 		// ===== FCO =====
 		PmergeMe();
@@ -55,5 +55,98 @@ class PmergeMe {
 				}
 		};
 };
+
+std::vector<size_t> jacobSthal(size_t maxIndex);
+
+template <typename T>
+size_t dichotomieSearch(T& vToInsert, int valueToInsert, size_t maxLevel) {
+	size_t low = 0;
+	while (low < maxLevel) {
+		size_t mid = low + (maxLevel - low) / 2;
+		if (valueToInsert < vToInsert[mid])
+			maxLevel = mid;
+		else
+			low = mid + 1;
+	}
+	return low;
+}
+
+
+template <typename T>
+T fjSortVector(T& toSort) {
+	if (toSort.size() <= 1)
+		return toSort;
+
+	std::vector<std::pair<int, int> > pairs;
+	int rest = -1;
+	bool hasRest = false;
+
+	for (size_t i = 0; i + 1 < toSort.size(); i += 2) {
+		if (toSort[i] > toSort[i + 1])
+			pairs.push_back(std::make_pair(toSort[i], toSort[i + 1]));
+		else
+			pairs.push_back(std::make_pair(toSort[i + 1], toSort[i]));
+	}
+
+	if (toSort.size() % 2 != 0) {
+		rest = toSort.back();
+		hasRest = true;
+	}
+
+	T bigs;
+	for (size_t i = 0; i < pairs.size(); ++i) {
+		bigs.push_back(pairs[i].first);
+	}
+
+	T sortedBigs = fjSortVector(bigs);
+
+	std::vector<std::pair<int, int> > sortedPairs;
+	for (size_t i = 0; i < sortedBigs.size(); ++i) {
+		for (size_t j = 0; j < pairs.size(); ++j) {
+			if (pairs[j].first == sortedBigs[i]) {
+				sortedPairs.push_back(pairs[j]);
+				pairs.erase(pairs.begin() + j);
+				break;
+			}
+		}
+	}
+	pairs = sortedPairs;
+
+	T main;
+	T pend;
+
+	if (!pairs.empty()) {
+		main.push_back(pairs[0].second);
+		main.push_back(pairs[0].first);
+
+		for (size_t i = 1; i < pairs.size(); ++i) {
+			main.push_back(pairs[i].first);
+			pend.push_back(pairs[i].second);
+		}
+	}
+	
+	std::vector<size_t> jacob = jacobSthal(pend.size());
+	size_t lastJacob = 1;
+
+	for (size_t i = 0; i < jacob.size(); ++i) {
+		size_t currentJacob = jacob[i];
+
+		size_t maxIndex = (currentJacob > pend.size()) ? pend.size(): currentJacob;
+
+		for (size_t j = maxIndex; j > lastJacob; --j) {
+			int value = pend[j - 1];
+			size_t pos = dichotomieSearch(main, value, main.size());
+			main.insert(main.begin() + pos, value);
+		}
+		lastJacob = maxIndex;
+	}
+
+	if (hasRest) {
+		size_t pos = dichotomieSearch(main, rest, main.size());
+		main.insert(main.begin() + pos, rest);
+	}
+	return main;
+}
+
 
 #endif
