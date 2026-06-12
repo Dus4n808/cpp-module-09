@@ -45,8 +45,8 @@ BitCoinExchange::~BitCoinExchange() {}
 // Methods                       
 // ================================================================ //
 
-// ===== Is Valide Date =====
-bool BitCoinExchange::isValideDate(const std::string& date) const {
+// ===== Is Valide Date tools =====
+static bool isValideDate(const std::string& date) {
 	if (date.length() != 10)
 		return false;
 	if (date[4] != '-' || date[7] != '-')
@@ -76,8 +76,8 @@ bool BitCoinExchange::isValideDate(const std::string& date) const {
 	return true;
 }
 
-// ===== Trim =====
-std::string BitCoinExchange::trim(const std::string& str) const {
+// ===== Trim tools =====
+static std::string trim(const std::string& str) {
 	std::string whiteSpace = " \t\n\r";
 	size_t start = str.find_first_not_of(whiteSpace);
 	if (start == std::string::npos)
@@ -145,10 +145,10 @@ void BitCoinExchange::readInputFile(const std::string& filename) {
 			continue;
 		}
 		double v;
-		std::stringstream ss(value);
+		std::istringstream ss(value);
 		ss >> v;
 		if (ss.fail() || !ss.eof()) {
-			std::cerr << "Error de conversion" << std::endl;
+			std::cerr << "Error : conversion" << std::endl;
 			continue;
 		}
 		if (v < 0) {

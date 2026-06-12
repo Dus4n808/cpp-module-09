@@ -21,8 +21,6 @@
 class BitCoinExchange {
 	private:
 		std::map<std::string, double> _data;
-		std::string trim(const std::string& str) const;
-		bool isValideDate(const std::string& str) const;
 		double getRate(double value, std::string& date);
 	
 	public:

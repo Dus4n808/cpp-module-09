@@ -17,7 +17,6 @@
 
 
 int main(int argc, char *argv[]) {
-	(void)argv;
 	if (argc != 2) {
 		std::cout << "Usage: ./btc [file]" << std::endl;	
 	}

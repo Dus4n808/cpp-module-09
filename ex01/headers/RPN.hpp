@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:24:25 by dufama            #+#    #+#             */
-/*   Updated: 2026/06/05 10:24:25 by dufama           ###   ########.fr       */
+/*   Updated: 2026/06/12 14:07:44 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <exception>
 #include <stack>
+#include <string>
 
 class RPN {
 	private:

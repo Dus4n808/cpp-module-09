@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/RNP.hpp"
+#include "../headers/RPN.hpp"
 #include <cstddef>
 #include <exception>
 #include <iostream>
