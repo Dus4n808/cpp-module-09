@@ -12,6 +12,7 @@
 
 #include "../headers/RPN.hpp"
 #include <cstddef>
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <ostream>
@@ -58,7 +59,11 @@ void myTest(void) {
 int main(int argc, char *argv[]) {
 	RPN genius;
 	
-	if (argc == 2) {
+	if (argc != 2) {
+		std::cerr << "Usage: ./RPM [1 1 +]" << std::endl;
+		return EXIT_FAILURE;	
+	}
+	else {
 		std::cout << std::endl << "===== Input User =====" << std::endl << std::endl;
 		try {
 			std::cout << genius.solve(argv[1]) << std::endl;
@@ -70,10 +75,6 @@ int main(int argc, char *argv[]) {
 		testMandatory();
 		std::cout << std::endl << "===== My test =====" << std::endl << std::endl;
 		myTest();
-	}
-	else {
-		std::cerr << "Usage: ./RPM [1 1 +]" << std::endl;
-		return 1;
 	}
 	return 0;
 }

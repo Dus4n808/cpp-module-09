@@ -17,7 +17,7 @@
 #include <string>
 
 
-
+// ===== Func to concat input user =====
 static std::string concat(int argc, char *argv[]) {
 	std::string input;
 	for (int i = 1; i < argc; ++i) {

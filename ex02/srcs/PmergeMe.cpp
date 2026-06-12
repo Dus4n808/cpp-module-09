@@ -19,7 +19,6 @@
 #include <sstream>
 #include <iostream>
 #include <string>
-#include <sys/_types/_timeval.h>
 #include <vector>
 #include <sys/time.h>
 

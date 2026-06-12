@@ -129,6 +129,8 @@ void BitCoinExchange::readInputFile(const std::string& filename) {
 
 	std::string line;
 	std::getline(file, line);
+	if (line != "date | value")
+		throw ErrorFile();
 	while (std::getline(file, line)) {
 		line = trim(line);
 		if (line.empty())

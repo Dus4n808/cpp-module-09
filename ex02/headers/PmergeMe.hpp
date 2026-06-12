@@ -36,8 +36,8 @@ class PmergeMe {
 
 		// ===== Methods =====
 		void sort(const std::string& str);
-	
 
+		// ===== Exception =====
 		class NumebrError : public std::exception {
 			public:
 				const char * what() const throw() {
@@ -60,8 +60,15 @@ class PmergeMe {
 		};
 };
 
+
 std::vector<size_t> jacobSthal(size_t maxIndex);
 
+
+// ================================================================ //
+// Template                       
+// ================================================================ //
+
+// ===== Func to print Deque or Vector =====
 template <typename T>
 void printContainer(const T& container) {
 	typedef typename T::const_iterator iterator;
@@ -71,6 +78,7 @@ void printContainer(const T& container) {
 	std::cout << std::endl;
 }
 
+// ===== Insert in pos with dicotomie search =====
 template <typename T>
 size_t findInsertPos(T& container, int valueToInsert, size_t maxLevel) {
 	size_t low = 0;
