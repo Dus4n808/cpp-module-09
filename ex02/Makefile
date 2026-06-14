@@ -47,12 +47,15 @@ clean:
 	@echo "$(G)Objects cleaned.$(RES)"
 
 fclean: clean
-	@echo "$(Y)Removing $(NAME)...$(RES)"
-	@rm -f $(NAME)
+	@echo "$(Y)Removing $(NAME) and debug files...$(RES)"
+	@rm -f $(NAME) debug
 	@echo "$(G)Cleanup complete.$(RES)"
 
 debug: CXXFLAGS += -g
 debug: re
+	@echo "$(B)🔗 Creating debug file...$(RES)"
+	@ln -sf $(NAME) debug
+	@echo "$(G)🐛 'debug' is ready for Zed!$(RES)"
 
 re: fclean all
 
