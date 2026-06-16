@@ -34,16 +34,12 @@ std::vector<size_t> jacobSthal(size_t maxIndex) {
 	jacob.push_back(0);
 	jacob.push_back(1);
 
-	size_t last = 0;
-	size_t prev = 1;
-
 	while (true) {
-		size_t next = last + 2 * prev;
-		jacob.push_back(next);
-		prev = last;
-		last = next;
+		size_t index = jacob.size();
+		size_t next = jacob[index - 1] + 2 * jacob[index - 2];
 		if (next > maxIndex)
 			break;
+		jacob.push_back(next);
 	}
 	return jacob;
 }
