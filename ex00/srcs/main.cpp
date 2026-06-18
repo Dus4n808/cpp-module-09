@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	else {
 		BitCoinExchange a;
 		try {
-			a.loadDataBase("test.csv");
+			a.loadDataBase("data.csv");
 		}
 		catch (std::exception& e) {
 			std::cerr << "Error : " << e.what() << std::endl;

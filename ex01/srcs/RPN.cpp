@@ -33,7 +33,7 @@ static bool isOperator(char c) {
 }
 
 
-void RPN::makeCalcul(char c) {
+void RPN::_makeCalcul(char c) {
 	if (_stack.size() < 2)
 		throw InvalidInput();
 	int a = _stack.top();
@@ -70,7 +70,7 @@ int RPN::solve(const std::string& str) {
 			_stack.push(value);
 		}
 		else if (token.size() == 1 && isOperator(token[0])){
-			makeCalcul(token[0]);
+			_makeCalcul(token[0]);
 		}
 		else {
 			throw InvalidInput();

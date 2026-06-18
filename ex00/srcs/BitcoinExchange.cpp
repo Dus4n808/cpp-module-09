@@ -12,6 +12,8 @@
 
 #include "../headers/BitcoinExchange.hpp"
 #include <cstddef>
+#include <exception>
+#include <iomanip>
 #include <sys/stat.h>
 #include <fstream>
 #include <iostream>
@@ -128,7 +130,6 @@ void BitCoinExchange::loadDataBase(const std::string& filename) {
 		double v;
 		std::istringstream ss(value);
 		ss >> v;
-		std::cout << "TEST === " << v << std::endl;
 		if (ss.fail() || !ss.eof())
 			throw ErrorFile();
 		numberOfline++;
@@ -180,15 +181,29 @@ void BitCoinExchange::readInputFile(const std::string& filename) {
 			std::cerr << "Error : too large number." << std::endl;
 			continue;
 		}
-		double res = getRate(v, date);
-		std::cout << date << " => " << v << " = " << res << std::endl;
+		double res;
+		try {
+			res = getRate(v, date);
+			std::cout << date << " => " << v << " = " <<
+			std::fixed << std::setprecision(2) << res << std::endl;
+		}
+		catch (std::exception& e) {
+			std::cerr << "Error : " << e.what() << " " << date << std::endl;
+		}
 	}
 }
 
 // ===== Get Rate =====
 double BitCoinExchange::getRate(double value, std::string& date) {
-	std::map<std::string, double>::iterator closer;
-	closer = _data.lower_bound(date);
-	double res = value * closer->second;
-	return res;
+	
+	std::map<std::string, double>::iterator it;
+	it = _data.lower_bound(date);
+
+	if (it != _data.end() && it->first == date)
+		return it->second * value;
+	
+	if (it == _data.begin())
+		throw ErrorDate();
+	--it;
+	return  it->second * value;
 }

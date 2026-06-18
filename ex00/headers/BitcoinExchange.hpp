@@ -46,6 +46,13 @@ class BitCoinExchange {
 					return "is a directory";
 				}
 		};
+
+		class ErrorDate : public std::exception {
+			public:
+				virtual const char * what() const throw() {
+					return "no date before";
+				}
+		};
 };
 
 #endif

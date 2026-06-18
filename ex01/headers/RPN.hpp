@@ -23,14 +23,17 @@ class RPN {
 		// ===== FCO =====
 		RPN(const RPN& copy);
 		RPN& operator=(const RPN& assign);
-		void makeCalcul(char c);
+		void _makeCalcul(char c);
 
 	public:
 		// ===== FCO =====
 		RPN();
 		~RPN();
+
+		// ===== Methods =====
 		int solve(const std::string& str);
 
+		// ===== Exception =====
 		class InvalidInput : public std::exception {
 			public:
 				const char * what() const throw() {
