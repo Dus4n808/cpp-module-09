@@ -36,7 +36,14 @@ class BitCoinExchange {
 		class ErrorFile : public std::exception {
 			public:
 				virtual const char * what() const throw() {
-					return "Error: could not open file.";
+					return "could not open file.";
+				}
+		};
+
+		class ErrorFileDir : public std::exception {
+			public:
+				virtual const char * what() const throw() {
+					return "is a directory";
 				}
 		};
 };

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <cstdlib>
 #include <exception>
 #include <string>
 #include <iostream>
@@ -23,17 +24,18 @@ int main(int argc, char *argv[]) {
 	else {
 		BitCoinExchange a;
 		try {
-			a.loadDataBase("data.csv");
+			a.loadDataBase("test.csv");
 		}
 		catch (std::exception& e) {
-			std::cerr << e.what() << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 			std::cerr << "Please enter a valid database" << std::endl;
+			return EXIT_FAILURE;
 		}
 		try {
 			a.readInputFile(argv[1]);
 		}
 		catch (std::exception& e) {
-			std::cerr << e.what() << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 			std::cerr << "Please add a valid input file (./btc [input file])" << std::endl;
 		}
 	}

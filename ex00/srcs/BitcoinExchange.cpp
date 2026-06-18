@@ -12,6 +12,7 @@
 
 #include "../headers/BitcoinExchange.hpp"
 #include <cstddef>
+#include <sys/stat.h>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -86,9 +87,24 @@ static std::string trim(const std::string& str) {
 	return str.substr(start, end - start + 1);
 }
 
+// ===== Check isdir tools =====
+static bool isDir(const std::string& filename) {
+	const char *path = filename.c_str();
+
+	struct stat info;
+
+	if (stat(path, &info) != 0)
+		return 0;
+	else if (info.st_mode & S_IFDIR)
+		return 1;
+	else
+		return 0;
+}
 
 // ===== LoadDataBase =====
 void BitCoinExchange::loadDataBase(const std::string& filename) {
+	if (isDir(filename))
+		throw ErrorFileDir();
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw ErrorFile();
@@ -110,8 +126,9 @@ void BitCoinExchange::loadDataBase(const std::string& filename) {
 
 		// ===== Conversion =====
 		double v;
-		std::stringstream ss(value);
+		std::istringstream ss(value);
 		ss >> v;
+		std::cout << "TEST === " << v << std::endl;
 		if (ss.fail() || !ss.eof())
 			throw ErrorFile();
 		numberOfline++;
@@ -123,6 +140,8 @@ void BitCoinExchange::loadDataBase(const std::string& filename) {
 
 // ===== Read Input File =====
 void BitCoinExchange::readInputFile(const std::string& filename) {
+	if (isDir(filename))
+		throw ErrorFileDir();
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw ErrorFile();
