@@ -96,11 +96,11 @@ static bool isDir(const std::string& filename) {
 	struct stat info;
 
 	if (stat(path, &info) != 0)
-		return 0;
+		return false;
 	else if (info.st_mode & S_IFDIR)
-		return 1;
+		return true;
 	else
-		return 0;
+		return false;
 }
 
 // ===== LoadDataBase =====
